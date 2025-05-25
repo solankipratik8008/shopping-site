@@ -60,7 +60,16 @@ const ProductList = () => {
       <h2>Product List</h2>
       <Link to="/cart">
     <button>🛒 View Cart</button>
-  </Link>
+    </Link>
+
+    <Link to="/account">
+  <button>👤 Account</button>
+</Link>
+ <Link to="/account">
+      <button>👤 Edit Account</button>
+    </Link>
+
+
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {products.map((product) => (
           <div key={product.id} style={{ border: '1px solid #ccc', padding: 10, width: 200 }}>
