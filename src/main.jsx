@@ -8,6 +8,7 @@ import CommentPage from './components/CommentPage';
 import { CartProvider } from './context/CartContext';
 import { UserProvider } from './context/UserContext';
 import { CommentProvider } from './context/CommentContext';
+import './style/index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <UserProvider>

@@ -7,8 +7,7 @@ import standImg from '../assets/stand.jpg';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-
+import '../style/index.css';
 
 const products = [
   {
@@ -48,56 +47,67 @@ const ProductList = () => {
   const { addToCart } = useCart();
 
   const handleChange = (e, id) => {
-    setQuantities({ ...quantities, [id]: e.target.value });
+    const value = Math.max(1, parseInt(e.target.value) || 1);
+    setQuantities({ ...quantities, [id]: value });
   };
 
-const handleAddToCart = (product) => {
-  const qty = quantities[product.id] || 1;
-  addToCart(product, parseInt(qty));
+  const handleAddToCart = (product) => {
+    const qty = quantities[product.id] || 1;
+    addToCart(product, parseInt(qty));
 
-  Swal.fire({
-    icon: 'success',
-    title: `${product.name}`,
-    text: `Added ${qty} item(s) to cart!`,
-    timer: 1500,
-    showConfirmButton: false,
-  });
-};
+    Swal.fire({
+      icon: 'success',
+      title: `${product.name}`,
+      text: `Added ${qty} item(s) to cart!`,
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  };
 
   return (
-    <div>
-      <h2>Product List</h2>
-      <Link to="/cart">
-    <button>🛒 View Cart</button>
-    </Link>
+    <div className="product-list-container">
+      <div className="product-list-header">
+        <h2>Product List</h2>
+        <div className="nav-buttons">
+          <Link to="/cart">
+            <button className="nav-button">🛒 View Cart</button>
+          </Link>
+          <Link to="/account">
+            <button className="nav-button">👤 Account</button>
+          </Link>
+          <Link to="/account">
+            <button className="nav-button">✏️ Edit Account</button>
+          </Link>
+          <Link to="/comments">
+            <button className="nav-button">💬 Comments</button>
+          </Link>
+        </div>
+      </div>
 
-    <Link to="/account">
-  <button>👤 Account</button>
-</Link>
- <Link to="/account">
-      <button>👤 Edit Account</button>
-    </Link>
-
-    <Link to="/comments">
-  <button> Comments</button>
-</Link>
-
-
-
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+      <div className="product-grid">
         {products.map((product) => (
-          <div key={product.id} style={{ border: '1px solid #ccc', padding: 10, width: 200 }}>
-            <img src={product.image} alt={product.name} width="100%" />
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-            <input
-              type="number"
-              min="1"
-              value={quantities[product.id] || 1}
-              onChange={(e) => handleChange(e, product.id)}
-            />
-            <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
+          <div key={product.id} className="product-card">
+            <div className="product-image-container">
+              <img src={product.image} alt={product.name} className="product-image" />
+            </div>
+            <div className="product-info">
+              <h3 className="product-name">{product.name}</h3>
+              <p className="product-description">{product.description}</p>
+              <div className="quantity-control">
+                <label htmlFor={`qty-${product.id}`}>Qty:</label>
+                <input
+                  id={`qty-${product.id}`}
+                  type="number"
+                  min="1"
+                  className="quantity-input"
+                  value={quantities[product.id] || 1}
+                  onChange={(e) => handleChange(e, product.id)}
+                />
+              </div>
+              <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
+                Add to Cart
+              </button>
+            </div>
           </div>
         ))}
       </div>
