@@ -6,6 +6,8 @@ import caseImg from '../assets/Case.jpg';
 import standImg from '../assets/stand.jpg';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 
 const products = [
@@ -49,11 +51,18 @@ const ProductList = () => {
     setQuantities({ ...quantities, [id]: e.target.value });
   };
 
-  const handleAddToCart = (product) => {
-    const qty = quantities[product.id] || 1;
-    addToCart(product, parseInt(qty));
-    alert(`Added ${qty} of ${product.name} to cart`);
-  };
+const handleAddToCart = (product) => {
+  const qty = quantities[product.id] || 1;
+  addToCart(product, parseInt(qty));
+
+  Swal.fire({
+    icon: 'success',
+    title: `${product.name}`,
+    text: `Added ${qty} item(s) to cart!`,
+    timer: 1500,
+    showConfirmButton: false,
+  });
+};
 
   return (
     <div>
@@ -68,6 +77,12 @@ const ProductList = () => {
  <Link to="/account">
       <button>👤 Edit Account</button>
     </Link>
+
+    <Link to="/comments">
+  <button> Comments</button>
+</Link>
+
+
 
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UserForm = () => {
   const { user, saveUser } = useUser();
@@ -14,7 +15,7 @@ const UserForm = () => {
 
   useEffect(() => {
     if (user) {
-      setFormData({ ...user, password: '' }); // Don't persist password
+      setFormData({ ...user, password: '' }); // Pre-fill but don't keep password
     }
   }, [user]);
 
@@ -25,9 +26,15 @@ const UserForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     saveUser(formData);
-    alert('✅ Account saved!');
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Account Saved!',
+      text: user ? 'Your account details were updated.' : 'Your account has been created.',
+      timer: 2000,
+      showConfirmButton: false,
+    });
   };
- 
 
   return (
     <div>
@@ -53,9 +60,7 @@ const UserForm = () => {
         <button type="submit" style={{ marginTop: '10px' }}>Save Account</button>
       </form>
     </div>
-    
   );
-
 };
 
 export default UserForm;

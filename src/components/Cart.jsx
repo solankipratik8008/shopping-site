@@ -1,12 +1,35 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart } = useCart();
 
   const handlePurchase = () => {
-    alert('🎉 Purchase complete! Thank you for your order.');
+    Swal.fire({
+      icon: 'success',
+      title: '🎉 Purchase Complete!',
+      text: 'Thank you for your order.',
+      confirmButtonText: 'Close',
+    });
+  };
+
+  const handleRemove = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This item will be removed from your cart.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#aaa',
+      confirmButtonText: 'Yes, remove it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeFromCart(id);
+        Swal.fire('Removed!', 'Item has been removed from your cart.', 'success');
+      }
+    });
   };
 
   return (
@@ -31,11 +54,11 @@ const Cart = () => {
                 onChange={(e) => updateQuantity(item.id, e.target.value)}
               />
               <br />
-              <button onClick={() => removeFromCart(item.id)}>Remove</button>
+              <button onClick={() => handleRemove(item.id)}>🗑 Remove</button>
             </div>
           ))}
           <button onClick={handlePurchase} style={{ marginTop: '20px' }}>
-            Finalize Purchase
+            ✅ Finalize Purchase
           </button>
         </div>
       )}
