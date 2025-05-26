@@ -11,11 +11,11 @@ import Footer from '../components/Footer';
 import '../style/index.css';
 
 const products = [
-  { id: 1, name: "Wireless Headphones", image: headphonesImg, description: "High quality wireless headphones." },
-  { id: 2, name: "Smart Watch", image: watchImg, description: "Track your health and notifications." },
-  { id: 3, name: "Bluetooth Speaker", image: speakerImg, description: "Portable speaker with deep bass." },
-  { id: 4, name: "Phone Case", image: caseImg, description: "Shockproof case for all phones." },
-  { id: 5, name: "Laptop Stand", image: standImg, description: "Ergonomic aluminum stand." },
+  { id: 1, name: "Wireless Headphones", price: 59.99, image: headphonesImg, description: "High quality wireless headphones." },
+  { id: 2, name: "Smart Watch", price: 89.99, image: watchImg, description: "Track your health and notifications." },
+  { id: 3, name: "Bluetooth Speaker", price: 45.00, image: speakerImg, description: "Portable speaker with deep bass." },
+  { id: 4, name: "Phone Case", price: 15.00, image: caseImg, description: "Shockproof case for all phones." },
+  { id: 5, name: "Laptop Stand", price: 32.50, image: standImg, description: "Ergonomic aluminum stand." },
 ];
 
 const ProductList = () => {
@@ -42,7 +42,6 @@ const ProductList = () => {
 
   return (
     <>
-      {/* Navigation Buttons at Top Right */}
       <style>{`
         .top-nav {
           position: fixed;
@@ -85,7 +84,6 @@ const ProductList = () => {
         </Link>
       </div>
 
-      {/* Main Content */}
       <div className="product-list-container">
         <header className="product-list-header">
           <h2>Product List</h2>
@@ -100,6 +98,7 @@ const ProductList = () => {
               <div className="product-info">
                 <h3 className="product-name">{product.name}</h3>
                 <p className="product-description">{product.description}</p>
+                <p className="product-price"><strong>Price:</strong> ${product.price.toFixed(2)}</p>
                 <div className="quantity-control">
                   <label htmlFor={`qty-${product.id}`}>Qty:</label>
                   <input
@@ -119,7 +118,6 @@ const ProductList = () => {
           ))}
         </div>
       </div>
-
     </>
   );
 };

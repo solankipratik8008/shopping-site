@@ -5,7 +5,7 @@ import Footer from './components/footer';
 function App() {
   return (
     <div>
-      <h1>Shopping Website</h1>
+      <h1>Shopping Website - Tech Heaven </h1>
       <ProductList />
       <Footer />
     </div>

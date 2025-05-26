@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -52,18 +52,137 @@ const styles = {
     border: 'none',
     borderRadius: '6px',
     cursor: 'pointer',
-  }
+  },
 };
 
 const Cart = () => {
-  const { cart, updateQuantity, removeFromCart } = useCart();
+  const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
+  const receiptRef = useRef();
+
+  const generateReceiptContent = () => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    const dayOfWeek = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+    const timeString = currentDate.toLocaleTimeString();
+
+    const total = cart.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
+    const tax = total * 0.1;
+    const grandTotal = total + tax;
+
+    return `
+      <div style="max-width:600px; margin:0 auto; font-family:Arial, sans-serif; padding:20px;">
+        <div style="text-align:center; margin-bottom:20px;">
+          <h1 style="margin-bottom:5px; color:#333;">Tech Haven 🛒</h1>
+          <p style="margin:5px 0; color:#666;">123 Tech Street, Silicon Valley</p>
+          <p style="margin:5px 0; color:#666;">Phone: (555) 123-4567</p>
+        </div>
+
+        <hr style="border-top:2px dashed #ccc; margin:15px 0;">
+
+        <div style="margin-bottom:15px;">
+          <p style="margin:5px 0;"><strong>Date:</strong> ${formattedDate}</p>
+          <p style="margin:5px 0;"><strong>Day:</strong> ${dayOfWeek}</p>
+          <p style="margin:5px 0;"><strong>Time:</strong> ${timeString}</p>
+          <p style="margin:5px 0;"><strong>Receipt #:</strong> ${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}</p>
+        </div>
+
+        <hr style="border-top:1px solid #eee; margin:15px 0;">
+
+        <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+          <thead>
+            <tr style="border-bottom:1px solid #ddd;">
+              <th style="text-align:left; padding:8px;">Item</th>
+              <th style="text-align:center; padding:8px;">Qty</th>
+              <th style="text-align:right; padding:8px;">Price</th>
+              <th style="text-align:right; padding:8px;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cart.map(item => `
+              <tr key="${item.id}" style="border-bottom:1px solid #eee;">
+                <td style="padding:8px;">${item.name}</td>
+                <td style="text-align:center; padding:8px;">${item.quantity}</td>
+                <td style="text-align:right; padding:8px;">$${item.price?.toFixed(2)}</td>
+                <td style="text-align:right; padding:8px;">$${((item.price || 0) * item.quantity).toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+
+        <hr style="border-top:2px dashed #ccc; margin:15px 0;">
+
+        <div style="text-align:right; margin-bottom:20px;">
+          <p style="margin:5px 0;"><strong>Subtotal:</strong> $${total.toFixed(2)}</p>
+          <p style="margin:5px 0;"><strong>Tax (10%):</strong> $${tax.toFixed(2)}</p>
+          <p style="margin:5px 0; font-size:18px;"><strong>Grand Total:</strong> $${grandTotal.toFixed(2)}</p>
+        </div>
+
+        <hr style="border-top:1px solid #eee; margin:15px 0;">
+
+        <div style="text-align:center; margin-top:30px; color:#666;">
+          <p>Thank you for shopping with us!</p>
+          <p>Please come again</p>
+          <p style="margin-top:10px; font-size:14px;">
+            <em>For returns or exchanges, please present this receipt within 30 days</em>
+          </p>
+        </div>
+      </div>
+    `;
+  };
+
+  const handlePrint = () => {
+    const content = generateReceiptContent();
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Receipt</title>
+          <style>
+            body { margin: 0; padding: 0; }
+            @media print {
+              @page { margin: 0; }
+              body { padding: 20px; }
+            }
+          </style>
+        </head>
+        <body>
+          ${content}
+          <script>
+            setTimeout(function() {
+              window.print();
+              window.close();
+            }, 100);
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
 
   const handlePurchase = () => {
+    if (cart.length === 0) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Your cart is empty',
+        text: 'Add some products before purchasing.',
+      });
+      return;
+    }
+
     Swal.fire({
       icon: 'success',
       title: '🎉 Purchase Complete!',
       text: 'Thank you for your order.',
-      confirmButtonText: 'Close',
+      confirmButtonText: 'Print Receipt',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handlePrint();
+        clearCart();
+      }
     });
   };
 
@@ -84,9 +203,13 @@ const Cart = () => {
     });
   };
 
+  const total = cart.reduce(
+    (sum, item) => sum + (item.price || 0) * item.quantity,
+    0
+  );
+
   return (
     <div style={styles.container}>
-      {/* Add CSS for back-button here */}
       <style>{`
         .back-button {
           display: inline-block;
@@ -101,6 +224,7 @@ const Cart = () => {
           transition: background-color 0.3s ease, box-shadow 0.2s ease;
           border: none;
           text-align: center;
+          margin-bottom: 20px;
         }
         .back-button:hover,
         .back-button:focus {
@@ -110,8 +234,8 @@ const Cart = () => {
         }
       `}</style>
 
-      <h2 style={styles.heading}>Shopping Cart</h2>
       <Link to="/" className="back-button">← Back to Products</Link>
+      <h2 style={styles.heading}>Shopping Cart</h2>
 
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
@@ -119,23 +243,25 @@ const Cart = () => {
         <div>
           {cart.map((item) => (
             <div key={item.id} style={styles.itemBox}>
-              <img src={item.image} alt={item.name} style={styles.image} />
+              {item.image && <img src={item.image} alt={item.name} style={styles.image} />}
               <div style={styles.itemDetails}>
                 <h3>{item.name}</h3>
-                <p>{item.description}</p>
+                {item.description && <p>{item.description}</p>}
                 <label>Quantity: </label>
                 <input
                   type="number"
                   min="1"
                   value={item.quantity}
                   style={styles.quantityInput}
-                  onChange={(e) => updateQuantity(item.id, e.target.value)}
+                  onChange={(e) => updateQuantity(item.id, parseInt(e.target.value, 10))}
                 />
                 <br />
                 <button style={styles.removeButton} onClick={() => handleRemove(item.id)}>🗑 Remove</button>
               </div>
             </div>
           ))}
+
+          <h3>Total: ${total.toFixed(2)}</h3>
           <button style={styles.purchaseButton} onClick={handlePurchase}>
             ✅ Finalize Purchase
           </button>
