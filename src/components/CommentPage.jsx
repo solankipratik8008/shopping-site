@@ -221,10 +221,11 @@ const CommentPage = () => {
         
         .comment-list {
           margin-top: 3rem;
+          color:white
         }
         
         .comment-list h3 {
-          color: #2c3e50;
+          color:rgb(251, 251, 251);
           font-size: 1.5rem;
           margin-bottom: 1.5rem;
           padding-bottom: 0.5rem;
@@ -310,6 +311,9 @@ const CommentPage = () => {
             gap: 1rem;
           }
         }
+          
+
+
       `}</style>
 
       <div className="comment-header">
