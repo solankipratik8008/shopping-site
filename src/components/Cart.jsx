@@ -2,58 +2,7 @@ import React, { useRef } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-const styles = {
-  container: {
-    padding: '20px',
-    maxWidth: '800px',
-    margin: '0 auto',
-    fontFamily: 'Arial, sans-serif',
-  },
-  heading: {
-    fontSize: '24px',
-    marginBottom: '10px',
-  },
-  itemBox: {
-    border: '1px solid #ccc',
-    borderRadius: '10px',
-    marginBottom: '15px',
-    padding: '15px',
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '15px',
-  },
-  image: {
-    width: '100px',
-    borderRadius: '5px',
-  },
-  itemDetails: {
-    flexGrow: 1,
-  },
-  quantityInput: {
-    marginTop: '5px',
-    padding: '5px',
-    width: '60px',
-  },
-  removeButton: {
-    marginTop: '10px',
-    padding: '5px 10px',
-    backgroundColor: '#dc3545',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  purchaseButton: {
-    marginTop: '20px',
-    padding: '10px 20px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-  },
-};
+import '../style/index.css';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -209,8 +158,86 @@ const Cart = () => {
   );
 
   return (
-    <div style={styles.container}>
+    <>
       <style>{`
+        .top-nav {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          gap: 10px;
+          z-index: 1000;
+        }
+
+        .nav-button {
+          background-color: rgb(77, 75, 219);
+          color: white;
+          padding: 8px 14px;
+          border: none;
+          border-radius: 5px;
+          font-size: 14px;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+          background-color: #007bff;
+        }
+
+        .cart-container {
+          padding: 20px;
+          max-width: 800px;
+          margin: 60px auto 20px;
+          font-family: Arial, sans-serif;
+        }
+
+        .cart-item {
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          margin-bottom: 15px;
+          padding: 15px;
+          display: flex;
+          align-items: flex-start;
+          gap: 15px;
+        }
+
+        .cart-item-image {
+          width: 100px;
+          border-radius: 5px;
+        }
+
+        .cart-item-details {
+          flex-grow: 1;
+        }
+
+        .quantity-input {
+          margin-top: 5px;
+          padding: 5px;
+          width: 60px;
+        }
+
+        .remove-button {
+          margin-top: 10px;
+          padding: 5px 10px;
+          background-color: #dc3545;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .purchase-button {
+          margin-top: 20px;
+          padding: 10px 20px;
+          background-color: #28a745;
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
         .back-button {
           display: inline-block;
           padding: 8px 16px;
@@ -220,54 +247,70 @@ const Cart = () => {
           border-radius: 5px;
           font-weight: 600;
           cursor: pointer;
-          user-select: none;
           transition: background-color 0.3s ease, box-shadow 0.2s ease;
           border: none;
-          text-align: center;
           margin-bottom: 20px;
         }
-        .back-button:hover,
-        .back-button:focus {
+
+        .back-button:hover {
           background-color: rgb(227, 28, 28);
           box-shadow: 0 0 8px rgba(2, 2, 2, 0.6);
-          outline: none;
         }
       `}</style>
 
-      <Link to="/" className="back-button">← Back to Products</Link>
-      <h2 style={styles.heading}>Shopping Cart</h2>
+      <div className="top-nav">
+        <Link to="/cart">
+          <button className="nav-button">🛒 View Cart</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">👤 Login</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">✏️ Edit Account</button>
+        </Link>
+        <Link to="/comments">
+          <button className="nav-button">💬 Comments</button>
+        </Link>
+      </div>
 
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <div>
-          {cart.map((item) => (
-            <div key={item.id} style={styles.itemBox}>
-              {item.image && <img src={item.image} alt={item.name} style={styles.image} />}
-              <div style={styles.itemDetails}>
-                <h3>{item.name}</h3>
-                {item.description && <p>{item.description}</p>}
-                <label>Quantity: </label>
-                <input
-                  type="number"
-                  min="1"
-                  value={item.quantity}
-                  style={styles.quantityInput}
-                  onChange={(e) => updateQuantity(item.id, parseInt(e.target.value, 10))}
-                />
-                <br />
-                <button style={styles.removeButton} onClick={() => handleRemove(item.id)}>🗑 Remove</button>
+      <div className="cart-container">
+        <Link to="/" className="back-button">← Back to Products</Link>
+        <h2>Shopping Cart</h2>
+
+        {cart.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <div>
+            {cart.map((item) => (
+              <div key={item.id} className="cart-item">
+                {item.image && <img src={item.image} alt={item.name} className="cart-item-image" />}
+                <div className="cart-item-details">
+                  <h3>{item.name}</h3>
+                  {item.description && <p>{item.description}</p>}
+                  <label>Quantity: </label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={item.quantity}
+                    className="quantity-input"
+                    onChange={(e) => updateQuantity(item.id, parseInt(e.target.value, 10))}
+                  />
+                  <br />
+                  <button className="remove-button" onClick={() => handleRemove(item.id)}>
+                    🗑 Remove
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          <h3>Total: ${total.toFixed(2)}</h3>
-          <button style={styles.purchaseButton} onClick={handlePurchase}>
-            ✅ Finalize Purchase
-          </button>
-        </div>
-      )}
-    </div>
+            <h3>Total: ${total.toFixed(2)}</h3>
+            <button className="purchase-button" onClick={handlePurchase}>
+              ✅ Finalize Purchase
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

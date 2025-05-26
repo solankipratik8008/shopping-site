@@ -39,9 +39,34 @@ const UserForm = () => {
   return (
     <div className="user-form-page">
       <style>{`
+        .top-nav {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          gap: 10px;
+          z-index: 1000;
+        }
+
+        .nav-button {
+          background-color: rgb(77, 75, 219);
+          color: white;
+          padding: 8px 14px;
+          border: none;
+          border-radius: 5px;
+          font-size: 14px;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+          background-color: #007bff;
+        }
+
         .user-form-page {
           max-width: 700px;
-          margin: 2rem auto;
+          margin: 5rem auto 2rem; /* Increased top margin for nav */
           padding: 1rem;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           color: #333;
@@ -163,6 +188,22 @@ const UserForm = () => {
           }
         }
       `}</style>
+
+      {/* Add the navigation bar */}
+      <div className="top-nav">
+        <Link to="/cart">
+          <button className="nav-button">🛒 View Cart</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">👤 Login</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">✏️ Edit Account</button>
+        </Link>
+        <Link to="/comments">
+          <button className="nav-button">💬 Comments</button>
+        </Link>
+      </div>
 
       <div className="user-form-header">
         <h2>Account Details</h2>

@@ -115,9 +115,34 @@ const CommentPage = () => {
   return (
     <div className="comment-page">
       <style>{`
+        .top-nav {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          gap: 10px;
+          z-index: 1000;
+        }
+
+        .nav-button {
+          background-color: rgb(77, 75, 219);
+          color: white;
+          padding: 8px 14px;
+          border: none;
+          border-radius: 5px;
+          font-size: 14px;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+          background-color: #007bff;
+        }
+
         .comment-page {
           max-width: 700px;
-          margin: 2rem auto;
+          margin: 5rem auto 2rem;
           padding: 1rem;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           color: #333;
@@ -131,7 +156,7 @@ const CommentPage = () => {
         }
         
         .comment-page h2 {
-          color:rgb(255, 255, 255);
+          color: rgb(255, 255, 255);
           font-size: 1.8rem;
           margin: 0;
         }
@@ -221,11 +246,11 @@ const CommentPage = () => {
         
         .comment-list {
           margin-top: 3rem;
-          color:white
+          color: white;
         }
         
         .comment-list h3 {
-          color:rgb(251, 251, 251);
+          color: rgb(251, 251, 251);
           font-size: 1.5rem;
           margin-bottom: 1.5rem;
           padding-bottom: 0.5rem;
@@ -311,10 +336,22 @@ const CommentPage = () => {
             gap: 1rem;
           }
         }
-          
-
-
       `}</style>
+
+      <div className="top-nav">
+        <Link to="/cart">
+          <button className="nav-button">🛒 View Cart</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">👤 Login</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">✏️ Edit Account</button>
+        </Link>
+        <Link to="/comments">
+          <button className="nav-button">💬 Comments</button>
+        </Link>
+      </div>
 
       <div className="comment-header">
         <h2>Product Reviews</h2>
