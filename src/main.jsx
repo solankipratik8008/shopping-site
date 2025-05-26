@@ -25,4 +25,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </CommentProvider>
     </CartProvider>
   </UserProvider>
+
+
 );

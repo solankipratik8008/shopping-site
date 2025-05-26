@@ -1,4 +1,4 @@
-n/* src/index.css */
+/* src/index.css */
 
 /* Base Styles */
 :root {
@@ -184,29 +184,6 @@ body {
   }
 }
 
-.site-footer {
-  background-color: #f8f8f8;
-  padding: 20px 0;
-  text-align: center;
-  font-size: 14px;
-  border-top: 1px solid #ddd;
-}
-
-.footer-container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.footer-links a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
 /* Animation */
 @keyframes fadeIn {
   from {
@@ -222,6 +199,34 @@ body {
 .product-card {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+.site-footer {
+  background-color: #111827;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  margin-top: 10px;
+}
+
+.footer-links a {
+  color: #93c5fd;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
 
 .product-card:nth-child(1) { animation-delay: 0.1s; }
 .product-card:nth-child(2) { animation-delay: 0.2s; }
