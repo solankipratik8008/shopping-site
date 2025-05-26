@@ -37,116 +37,199 @@ const UserForm = () => {
   };
 
   return (
-    <div className="user-form-container">
+    <div className="user-form-page">
       <style>{`
-        .user-form-container {
-          max-width: 500px;
-          margin: 40px auto;
-          padding: 20px;
-          font-family: Arial, sans-serif;
+        .user-form-page {
+          max-width: 700px;
+          margin: 2rem auto;
+          padding: 1rem;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          color: #333;
         }
-
-        .user-form-container h2 {
-          font-size: 24px;
-          margin-bottom: 10px;
-        }
-
-        .user-form-container a {
-          display: inline-block;
-          margin-bottom: 20px;
-          color: #007bff;
-          text-decoration: none;
-        }
-
-        .user-form-container form {
+        
+        .user-form-header {
           display: flex;
-          flex-direction: column;
-          gap: 15px;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
         }
-
-        .user-form-container form div {
-          display: flex;
-          flex-direction: column;
+        
+        .user-form-page h2 {
+          color:rgb(255, 255, 255);
+          font-size: 1.8rem;
+          margin: 0;
         }
-
-        .user-form-container label {
-          font-weight: bold;
-          margin-bottom: 5px;
-        }
-
-        .user-form-container input,
-        .user-form-container textarea {
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          font-size: 14px;
-        }
-
-        .user-form-container textarea {
-          resize: vertical;
-          min-height: 60px;
-        }
-
-        .user-form-container button {
-          padding: 10px;
-          background-color: #28a745;
+        
+        .back-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1.2rem;
+          background-color: #2c3e50;
           color: white;
-          font-weight: bold;
+          border-radius: 6px;
+          transition: all 0.3s ease;
+          text-decoration: none;
+          font-weight: 500;
+        }
+        
+        .back-button:hover {
+          background-color: #1a252f;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .user-form {
+          margin: 2rem 0;
+          padding: 1.5rem;
+          border-radius: 10px;
+          background: white;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .account-details {
+          background: white;
+          padding: 1.5rem;
+          border-radius: 10px;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+          display: block;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          color: #2c3e50;
+        }
+        
+        .form-control {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          font-size: 1rem;
+          transition: border 0.3s ease;
+          background: white;
+        }
+        
+        .form-control:focus {
+          border-color: #3498db;
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+        }
+        
+        textarea.form-control {
+          min-height: 120px;
+          resize: vertical;
+          background: white;
+        }
+        
+        .submit-btn {
+          background: #27ae60;
+          color: white;
+          padding: 0.75rem 1.5rem;
           border: none;
-          border-radius: 5px;
+          border-radius: 6px;
+          font-size: 1rem;
+          font-weight: 600;
           cursor: pointer;
-          transition: background-color 0.2s ease-in-out;
+          transition: all 0.3s ease;
         }
-
-        .user-form-container button:hover {
-          background-color: #218838;
+        
+        .submit-btn:hover {
+          background: #219653;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(39,174,96,0.2);
         }
-
-                .link-button {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color:rgb(2, 2, 2); /* blue */
-  color: white;
-  text-decoration: none; /* remove underline */
-  border-radius: 5px;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease, box-shadow 0.2s ease;
-  border: none;
-  text-align: center;
-}
-
-.link-button:hover,
-.link-button:focus {
-  background-color:rgb(227, 28, 28); /* darker blue */
-  box-shadow: 0 0 8px rgba(2, 2, 2, 0.6);
-  outline: none;
-}
-
+        
+        .password-note {
+          font-size: 0.85rem;
+          color: #95a5a6;
+          margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+          .user-form-page {
+            padding: 1rem;
+          }
+          
+          .user-form-header {
+            flex-direction: column;
+            gap: 1rem;
+          }
+        }
       `}</style>
 
-      <h2>Account Details</h2>
-      <Link to="/" className="link-button">← Back to Products</Link>
-      <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Shipping Address:</label>
-          <textarea name="address" value={formData.address} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Password (optional):</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} />
-        </div>
-        <button type="submit" style={{ marginTop: '10px' }}>Save Account</button>
-      </form>
+      <div className="user-form-header">
+        <h2>Account Details</h2>
+        <Link to="/" className="back-button" aria-label="Go Back">
+          ← Back to Products
+        </Link>
+      </div>
+
+      <div className="account-details">
+        <form onSubmit={handleSubmit} className="user-form">
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              className="form-control"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              className="form-control"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="address">Shipping Address</label>
+            <textarea
+              id="address"
+              name="address"
+              className="form-control"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              className="form-control"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Leave blank to keep current password"
+            />
+            <p className="password-note">Only enter if you want to change your password</p>
+          </div>
+
+          <button type="submit" className="submit-btn">
+            {user ? 'Update Account' : 'Create Account'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
