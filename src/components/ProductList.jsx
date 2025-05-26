@@ -7,40 +7,15 @@ import standImg from '../assets/stand.jpg';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer'; // ✅ Correct way to import Footer
+import Footer from '../components/Footer';
 import '../style/index.css';
 
 const products = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    image: headphonesImg,
-    description: "High quality wireless headphones.",
-  },
-  {
-    id: 2,
-    name: "Smart Watch",
-    image: watchImg,
-    description: "Track your health and notifications.",
-  },
-  {
-    id: 3,
-    name: "Bluetooth Speaker",
-    image: speakerImg,
-    description: "Portable speaker with deep bass.",
-  },
-  {
-    id: 4,
-    name: "Phone Case",
-    image: caseImg,
-    description: "Shockproof case for all phones.",
-  },
-  {
-    id: 5,
-    name: "Laptop Stand",
-    image: standImg,
-    description: "Ergonomic aluminum stand.",
-  },
+  { id: 1, name: "Wireless Headphones", image: headphonesImg, description: "High quality wireless headphones." },
+  { id: 2, name: "Smart Watch", image: watchImg, description: "Track your health and notifications." },
+  { id: 3, name: "Bluetooth Speaker", image: speakerImg, description: "Portable speaker with deep bass." },
+  { id: 4, name: "Phone Case", image: caseImg, description: "Shockproof case for all phones." },
+  { id: 5, name: "Laptop Stand", image: standImg, description: "Ergonomic aluminum stand." },
 ];
 
 const ProductList = () => {
@@ -67,24 +42,54 @@ const ProductList = () => {
 
   return (
     <>
+      {/* Navigation Buttons at Top Right */}
+      <style>{`
+        .top-nav {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          gap: 10px;
+          z-index: 1000;
+        }
+
+        .nav-button {
+          background-color:rgb(77, 75, 219);
+          color: white;
+          padding: 8px 14px;
+          border: none;
+          border-radius: 5px;
+          font-size: 14px;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+          background-color: #007bff;
+        }
+      `}</style>
+
+      <div className="top-nav">
+        <Link to="/cart">
+          <button className="nav-button">🛒 View Cart</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">👤 Login</button>
+        </Link>
+        <Link to="/account">
+          <button className="nav-button">✏️ Edit Account</button>
+        </Link>
+        <Link to="/comments">
+          <button className="nav-button">💬 Comments</button>
+        </Link>
+      </div>
+
+      {/* Main Content */}
       <div className="product-list-container">
-        <div className="product-list-header">
+        <header className="product-list-header">
           <h2>Product List</h2>
-          <div className="nav-buttons">
-            <Link to="/cart">
-              <button className="nav-button">🛒 View Cart</button>
-            </Link>
-            <Link to="/account">
-              <button className="nav-button">👤 Create Account</button>
-            </Link>
-            <Link to="/account">
-              <button className="nav-button">✏️ Edit Account</button>
-            </Link>
-            <Link to="/comments">
-              <button className="nav-button">💬 Comments</button>
-            </Link>
-          </div>
-        </div>
+        </header>
 
         <div className="product-grid">
           {products.map((product) => (
