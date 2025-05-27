@@ -68,5 +68,5 @@ Team Members
 
 👤 Member 2 (https://github.com/Anmol597-cyberrr)
 
-👤 Member 3 (GitHub)
+👤 Member 3 (https://github.com/rumsha24)
 
