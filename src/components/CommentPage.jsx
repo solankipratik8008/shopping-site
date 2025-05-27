@@ -59,7 +59,7 @@ const CommentPage = () => {
         confirmButtonText: 'Go to Login',
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = '/login';
+          window.location.href = '/account';
         }
       });
       return;
@@ -264,17 +264,21 @@ const CommentPage = () => {
           border-radius: 10px;
           box-shadow: 0 2px 10px rgba(0,0,0,0.05);
           position: relative;
+          padding-right: 3.5rem; /* Added space for the delete button */
         }
         
-        .comment-header {
+        .comment-card .comment-header { /* Specificity for the comment card header */
           display: flex;
-          justify-content: space-between;
+          flex-wrap: wrap; 
+          align-items: center; /* Align items vertically in the middle */
+          gap: 0.5rem; /* Space between flex items */
           margin-bottom: 0.5rem;
         }
         
         .comment-user {
           font-weight: 700;
           color: #2c3e50;
+          flex-shrink: 0; /* Prevent user name from shrinking */
         }
         
         .comment-product {
@@ -290,6 +294,8 @@ const CommentPage = () => {
         .comment-rating {
           color: #f39c12;
           font-weight: 600;
+          margin-left: 0.5rem; /* Keep rating close to the user name */
+          flex-shrink: 0; /* Prevent rating from shrinking */
         }
         
         .comment-text {
@@ -319,6 +325,7 @@ const CommentPage = () => {
           justify-content: center;
           cursor: pointer;
           transition: all 0.3s ease;
+          z-index: 10; /* Ensure the button is above other content */
         }
         
         .delete-btn:hover {

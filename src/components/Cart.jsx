@@ -252,9 +252,23 @@ const Cart = () => {
           margin-bottom: 20px;
         }
 
+        .back-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1.2rem;
+          background-color: #2c3e50;
+          color: white;
+          border-radius: 6px;
+          transition: all 0.3s ease;
+          text-decoration: none;
+          font-weight: 500;
+        }
+        
         .back-button:hover {
-          background-color: rgb(227, 28, 28);
-          box-shadow: 0 0 8px rgba(2, 2, 2, 0.6);
+          background-color: #1a252f;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
       `}</style>
 
