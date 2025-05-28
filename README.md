@@ -66,7 +66,8 @@ npm run dev
 Team Members
 👨‍💻 Pratikkumar Solanki (https://github.com/solankipratik8008)
 
-👤 Member 2 (https://github.com/Anmol597-cyberrr)
+👨‍💻 Rumsha Ahmed (https://github.com/rumsha24)
 
-👤 Member 3 (https://github.com/rumsha24)
+👨‍💻 Anmoldeep Kaur Bhullar (https://github.com/Anmol597-cyberrr)
+
 
